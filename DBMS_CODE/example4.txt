@@ -1,0 +1,149 @@
+-- create database example_4;
+
+--  use example_4;
+-- CREATE TABLE employee(employee_name varchar(30) PRIMARY KEY,street varchar(30),city varchar(30));
+
+-- INSERT INTO employee VALUES
+-- ('arif','51 upashahar','rajshahi'),
+-- ('sumon','52 east','moynamati'),
+-- ('sagor','neemgachhi','sirajgong'),
+-- ('abdul','binodpur','rajshahi'),
+-- ('himesh','nazrul avenue','dhaka'),
+-- ('amirul','chawk bazar','sylhet'),
+-- ('sajib','99 north','chittagong');
+
+-- CREATE TABLE company(company_name varchar(30),city varchar(30));
+
+-- INSERT INTO company VALUES
+-- ('agrani','rajshahi'),
+-- ('sonali','sylhet'),
+-- ('janata','dhaka');
+
+-- CREATE TABLE works(employee_name varchar(30),company_name varchar(30),salary int);
+
+-- INSERT INTO works VALUES
+-- ('sumon','agrani',12000),
+-- ('abdul','sonali',13000),
+-- ('himesh','agrani',6000),
+-- ('amirul','sonali',20000),
+-- ('sagor','sonali',8000),
+-- ('arif','janata',13000),
+-- ('sajib','janata',9000);
+
+
+-- CREATE TABLE manages(employee_name varchar(30),manager_name varchar(30));
+
+-- INSERT INTO manages VALUES
+-- ('amirul','amirul'),
+-- ('abdul','amirul'),
+-- ('sagor','amirul'),
+-- ('sumon','sumon'),
+-- ('himesh','sumon'),
+-- ('arif','arif'),
+-- ('sajib','arif');
+
+-- 2: select employee_name from works where company_name='sonali';
+-- 3: select employee_name,street,city from employee natural join works where company_name='agrani';
+
+-- 4: select employee_name,street,city from employee natural join works where company_name='sonali' && salary*12>=120000;
+
+-- 5: select employee_name from (select employee_name,city from works natural join company) as tem natural join employee;
+
+
+-- 6 : have a easy way to get that number by amirul=amirul , sumon=sumon , arif=arif
+-- select e.employee_name 
+-- from employee e 
+-- join manages m on e.employee_name=m.employee_name 
+-- join employee mng on m.manager_name=mng.employee_name
+-- where e.street=mng.street && e.city=mng.city
+
+-- 7 : select employee_name from works where company_name!='sonali'
+
+-- 8 :
+-- select employee_name
+-- from employee e natural join works w
+-- where w.salary>(
+-- 	select max(salary)from works
+--     where company_name='janata'
+-- )
+
+
+
+
+-- 9:
+-- select employee_name from works 
+-- where salary>(
+-- 	(select sum(salary)as total_salary
+--     from works)/
+--     (select count(*) as total_employee
+--     from works)
+-- )
+
+
+-- 10:
+-- select  company_name,count(*) as employee_count
+-- from works
+-- group by company_name
+-- order by employee_count asc
+-- 11
+-- select company_name,count(*) as employee_count
+-- from works
+-- group by company_name
+-- order by employee_count desc
+
+-- 12
+-- select company_name from
+-- ( select company_name, avg(salary)as s
+-- from works
+-- group by company_name
+-- order by  s  ) k
+-- where s>( select avg(salary) from works where company_name='agrani'  )
+
+-- 13
+-- update employee set city='natore' where employee_name='arif'
+-- 14
+-- update works set salary=salary*2.10 where company_name='agrani'
+
+
+-- 15
+-- update
+-- (select  distinct works.employee_name from works join manages where manager_name=works.employee_name and company_name='agrani') t natural join works 
+-- set salary=salary*1.1;
+
+-- emni 
+-- update works set salary =13000 where employee_name='arif'
+
+-- 16
+-- update 
+-- ( select works.employee_name from manages join works where works.employee_name=manages.manager_name) t natural Join works
+-- set salary=case
+-- 	when salary*1.1<=19000 then salary*1.1
+--     else 
+--     salary*1.03
+--     end
+-- 16
+-- UPDATE works
+-- SET salary = CASE  
+--           WHEN salary * 1.10 <= 19000 THEN salary * 1.10
+--           ELSE salary * 1.03
+--        END
+-- WHERE employee_name IN (
+--   SELECT manager_name
+--   FROM manages    
+-- );
+
+-- 17
+-- delete from works 
+-- where company_name ='janata'
+
+-- create view cv as 
+-- select manager_name,avg(salary) as s 
+-- from manages natural join works
+-- group by manager_name
+
+-- select * from cv
+
+-- view used  to make previlance of table colimn
+
+-- set sql_safe_updates =0
+

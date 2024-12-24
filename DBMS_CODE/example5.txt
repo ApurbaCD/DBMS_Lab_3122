@@ -1,0 +1,202 @@
+-- create database example_5
+-- use example_5
+
+-- create table publisher( name varchar(30) primary key ,address varchar(30),phone varchar(30));
+-- INSERT INTO publisher VALUES 
+--     ('PHI', '20 Delhi Super Market', '01715-454678'),
+--     ('Tata', 'North Kolkata', '0156-2345445'),
+--     ('Galgotia', 'Mumbai', '0192-203490');
+
+-- create table library_branch(
+--   branchid int primary key,
+--     branchname varchar(50),
+--     address varchar(50)
+-- );
+
+-- INSERT INTO library_branch VALUES 
+--     (1001, 'CSE Seminar Library', 'Rajshahi'),
+--     (1002, 'RU Central Library', 'Rajshahi'),
+--     (1003, 'DU Central Library', 'Dhaka');
+
+-- create table borrower(
+--   cardno int primary key,
+--     name varchar(50),
+--     address varchar(50),
+--     phone varchar(11)
+-- );
+
+-- INSERT INTO borrower VALUES 
+--     (10001, 'Saidur', 'CSE', '01714400567'),
+--     (10002, 'Rafiq', 'PHYSICS', '0194300456'),
+--     (10003, 'Masud', 'CSE', '0156345678'),
+--     (10004, 'Nobir', 'ICT', '01199203456');
+
+-- create table book( 
+-- bookid varchar(50) primary key,
+-- title varchar(50), 
+-- publishername varchar(50),
+-- foreign key (publishername) references publisher (name)
+-- );
+
+-- INSERT INTO book VALUES 
+--     ('100.001cn', 'Computer Network', 'PHI'),
+--     ('100.002dsc', 'Database System', 'Tata'),
+--     ('100.003ds', 'Digital System', 'PHI'),
+--     ('100.004db', 'DBMS', 'PHI'),
+--     ('100.005ora', 'Oracle 2000', 'Galgotia');
+
+
+-- create table bookauthors(
+--   bookid varchar(50),
+--     authorname varchar(50),
+--     primary key(bookid,authorname),
+--     foreign key(bookid) references book(bookid)    
+-- );
+
+-- INSERT INTO bookauthors VALUES 
+--     ('100.001cn', 'A S Tanenbaum'),
+--     ('100.002dsc', 'Silberschatz'),
+--     ('100.003ds', 'Ronald J Tocci'),
+--     ('100.004db', 'Ivan Bayross'),
+--     ('100.005ora', 'Ivan Bayross');
+
+-- create table book_copies(
+--   bookid varchar(50),
+--     branchid int ,
+--     noofcopies int,
+--     primary key(bookid,branchid),
+--     foreign key(bookid) references book(bookid),
+--     foreign key(branchid) references library_branch(branchid)
+-- );
+
+-- INSERT INTO book_copies VALUES 
+--     ('100.001cn', 1001, 2),
+--     ('100.001cn', 1002, 5),
+--     ('100.002dsc', 1001, 3),
+--     ('100.002dsc', 1002, 4),
+--     ('100.003ds', 1001, 3),
+--     ('100.003ds', 1003, 5),
+--     ('100.004db', 1001, 2),
+--     ('100.004db', 1002, 5),
+--     ('100.005ora', 1001, 2),
+--     ('100.005ora', 1002, 7);
+
+
+
+
+-- CREATE TABLE book_loan (
+--     bookid VARCHAR(10),
+--     branchid INT,
+--     cardno INT,
+--     dateout DATE,
+--     duedate DATE,
+--     PRIMARY KEY (bookid, branchid, cardno ),
+--     FOREIGN KEY (bookid) REFERENCES book(bookid),
+--     FOREIGN KEY (branchid) REFERENCES library_branch(branchid),
+--     FOREIGN KEY (cardno) REFERENCES borrower(cardno)
+-- );
+
+-- INSERT INTO book_loan VALUES 
+--     ('100.001cn', 1001, 10001, '2015-01-15', '2015-02-15'),
+--     ('100.001cn', 1002, 10002, '2015-01-25', '2015-02-25'),
+--     ('100.002dsc', 1001, 10003, '2015-02-20', '2015-03-20'),
+--     ('100.002dsc', 1002, 10004, '2015-03-15', '2015-04-15'),
+--     ('100.003ds', 1001, 10001, '2015-06-07', '2015-07-07'),
+--     ('100.003ds', 1003, 10002, '2015-10-15', '2015-11-15'),
+--     ('100.004db', 1001, 10003, '2015-10-25', '2015-11-25'),
+--     ('100.004db', 1002, 10004, '2015-11-15', '2015-12-15'),
+--     ('100.005ora', 1001, 10003, '2015-12-22', '2016-01-22'),
+--     ('100.005ora', 1002, 10001, '2015-12-25', '2016-01-25');
+
+
+--     select * from book;
+--     select * from bookauthors;
+--     select * from publisher;
+--     select * from book_copies;
+--     select * from library_branch;
+--     select * from borrower;
+--     select * from book_loan;
+
+
+-- alter table bookauthors rename to book_author
+
+
+-- 1
+
+-- select noofcopies from book_copies where(
+-- 	bookid=(select bookid from book where title='dbms') and
+--     branchid=(select branchid from library_branch where branchname='cse seminar library')
+-- )
+
+-- 2
+-- select branchname,noofcopies
+-- from
+-- ((select branchid,noofcopies from book_copies where bookid='100.004db') as n natural join library_branch)
+
+-- 3
+-- select name from borrower where
+-- cardno not in (
+-- 	select cardno from book_loan
+-- )
+
+-- 4
+
+-- select name,address,phone from borrower where cardno in (
+-- select cardno from book_loan where branchid=1001 and duedate='2015-02-15')
+
+-- 5
+-- select branchname,c
+-- from 
+-- (select branchid,count(*) as c
+-- from book_loan
+-- group by branchid
+-- order by c) as t natural join library_branch
+
+-- 6
+
+-- select name,address,c 
+-- from
+-- (select cardno ,count(*) as c
+-- from book_loan 
+-- group by cardno
+-- order by c) as t natural join borrower 
+-- where c>2
+
+-- 7
+
+-- select branchid,sum(noofcopies) as s,bookid
+-- from book_copies
+-- where branchid in
+-- (select branchid from library_branch where branchname='ru central library') and 
+-- bookid in
+-- (select bookid,title from book_author natural join book where authorname='Ivan bayross')
+-- group by branchid ,bookid
+-- order by s
+
+-- SELECT *
+-- FROM  (((book_author NATURAL JOIN book) NATURAL JOIN 
+-- book_copies) NATURAL JOIN library_branch)WHERE 
+-- authorname='ivan Bayross' AND branchname='ru central library'; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

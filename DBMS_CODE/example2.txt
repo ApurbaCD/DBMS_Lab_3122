@@ -1,0 +1,73 @@
+-- create database example_2;
+
+-- use example_2;
+-- create table employee(employee_name varchar(20),street varchar(20),city varchar(20));
+-- create table works(employee_name varchar(20),company_name varchar(20),salary int);
+
+-- alter table employee add primary key(employee_name)
+-- alter table employee drop primary key
+-- alter table employee
+-- add constraint street_1
+-- primary key (employee_name);
+
+-- insert into employee values
+-- ('arif','51 upashahar','rajshahi'),
+-- ('sumon','52 east','moynamoti'),
+-- ('sagor','neemgachhi','sirajgong'),
+-- ('abdul','binodpur','rajshahi'),
+-- ('himesh','nazrul avenue','dhaka'),
+-- ('amirul','chawk bazar','sylhet'),
+-- ('sajib','99 north','chittagong')
+
+
+-- insert into works values
+-- ('sumon','agrani',12000),
+-- ('abdul','sonali',13000),
+-- ('himesh','agrani',6000),
+-- ('amirul','sonali',20000),
+-- ('sagor','sonali',8000),
+-- ('arif','janata',13000),
+-- ('sajib','janata',9000)
+
+
+-- b: select employee_name from employee where city='rajshahi';
+-- c: select employee_name,street from employee where city='rajshahi';
+-- d: select employee_name from works where company_name='sonali';
+-- d: select employee_name from works where company_name='agrani';
+-- d: select employee_name from works where company_name='janata';
+-- e: select employee_name,salary from works where company_name='sonali';
+-- f: select employee_name from works where salary=12000;
+-- f: select employee_name from works where salary>=12000;
+-- f: select employee_name from works where salary<12000;
+
+-- g: select employee_name,company_name from works where salary=12000;
+-- g: select employee_name,company_name from works where salary>=12000;
+-- g: select employee_name,company_name from works where salary<12000;
+
+-- h: select employee_name,street,city from employee natural join works where works.company_name='agrani';
+
+-- i: select employee_name,street,city from employee natural join works where works.salary>=10000;
+-- j: select employee_name,company_name,salary from employee natural join works where employee.city='rajshahi';
+-- k: select employee_name,street,city,company_name from employee natural join works where salary>=10000;
+-- L: select employee_name,street,city from employee natural join works where company_name='sonali' && salary>=12000;
+-- M: select employee_name from works where company_name !='sonali';
+
+select * from works;
+-- n: update employee set city='natore'where employee_name='arif'
+
+-- To disable safe mode in MySQL Workbench:
+
+--     Go to Edit -> Preferences.
+--     Navigate to the SQL Editor tab.
+--     Uncheck the Safe Update Mode option.
+--     Reconnect to your database.(Click on the connection name in the navigation pane on the right.)
+
+-- o: update works set salary=salary*1.1 where company_name='agrani';
+
+-- p: delete from employee where employee_name='sagor';
+
+--  q: alter table works 
+--     add column (manaegr varchar(20));
+
+
+

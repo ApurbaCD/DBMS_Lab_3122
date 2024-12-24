@@ -1,0 +1,5 @@
+create table account(aname varchar(20),anumber int,balance int);
+INSERT INTO account VALUES
+('karim',101,1000),
+('montu',102,2000),
+('khepa',103,3000);

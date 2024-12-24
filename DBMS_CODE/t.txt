@@ -1,0 +1,11 @@
+find the company that has the most employees
+SELECT company_name, COUNT(*) AS employee_count
+FROM works
+GROUP BY company_name
+ORDER BY employee_count DESC
+LIMIT 1;
+
+
+sum
+SELECT SUM(salary) AS total_salary
+FROM works;

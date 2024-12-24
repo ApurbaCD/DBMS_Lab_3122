@@ -1,0 +1,98 @@
+-- create database example_3;
+-- use example_3;
+-- create table person(nid int ,name varchar(30),address varchar(30));
+-- alter table person add primary key(nid);
+-- create table car(license varchar(30),year year,model varchar(30));
+-- create table accident(date date ,driver varchar(30),d_ammount int);
+-- create table owns(nid int ,license varchar(30));
+-- create table log(license varchar(30),date date ,driver varchar(30));
+-- alter table car add primary key (license);
+-- alter table accident add primary key(date,driver);
+-- alter table owns add primary key (nid);
+-- alter table owns add primary key(nid,license);
+-- alter table log add primary key(license,date,driver);
+
+-- insert into person values
+-- (123451,'arif','rajshahi'),
+-- (123452,'sumon','moynamati'),
+-- (123453,'sagor','sirajgang'),
+-- (123454,'abdul','rajshahi'),
+-- (123455,'himesh','dhaka'),
+-- (123456,'amirul','sylhet'),
+-- (123457,'sajib','chittagang')
+
+-- insert into car values
+-- ('12-3000','2012','axio'),
+-- ('11-3000','2008','corolla'),
+-- ('12-4000','2013','axio'),
+-- ('12-5000','2013','premio'),
+-- ('11-5000','2010','nano'),
+-- ('11-6000','2011','alto'),
+-- ('12-6000','2015','nano twist')
+
+-- insert into accident values
+-- ('2013-12-01','arif',10000),
+-- ('2015-09-15','komol',12000),
+-- ('2014-06-20','bahadur',11000),
+-- ('2011-12-20','abdul',8000),
+-- ('2015-09-19','akter',7000),
+-- ('2013-05-15','arif',20000),
+-- ('2014-08-20','arif',15000)
+
+-- insert into owns values 
+-- (123451,'11-3000'),
+-- (123452,'12-4000'),
+-- (123453,'12-5000'),
+-- (123454,'11-5000'),
+-- (123455,'11-6000'),
+-- (123456,'12-6000'),
+-- (123457,'12-3000')
+
+-- insert into log values
+-- ('11-3000','2013-12-01','arif'),
+-- ('12-4000','2015-09-15','komol'),
+-- ('11-6000','2014-06-20','bahadur'),
+-- ('11-5000','2011-12-20','abdul'),
+-- ('12-6000','2015-09-19','akter'),
+-- ('11-3000','2013-05-15','arif'),
+-- ('11-3000','2014-08-20','arif')
+
+
+-- b: select name from person where address='rajshahi';
+-- c: select model from car where year=2013;
+-- d: select driver,d_ammount from accident where d_ammount>=10000&&d_ammount<=15000
+-- d: select driver,d_ammount from accident where d_ammount BETWEEN 10000 AND 15000;
+-- e: select nid from car natural join owns where model='axio';
+
+-- f: select name,address from person where nid=(select nid from car natural join owns where model='alto');
+
+-- g: select driver from accident where date='2011-12-20';
+-- h: select name from person natural join owns where license='12-4000';
+
+-- must give a name to make naturan join with nid and person that is driver_log
+-- to get distinct value use 
+-- i: select  distinct name from person natural join (select nid from owns natural join log where driver='arif') as driver_log;
+
+-- j : select model from car where license=(select license from accident natural join log where accident.date='2015-09-19')
+
+-- k : select count(*) as total_number from accident where driver='arif';
+-- for distinct value
+-- k: select count(distinct driver) as total_number from accident where driver='arif';
+
+-- i: select date from accident where driver='arif'
+
+-- m: update person set address='natore' where name='arif';
+
+
+
+
+
+
+
+
+
+
+
+
+
+

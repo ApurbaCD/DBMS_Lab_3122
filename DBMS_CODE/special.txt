@@ -1,0 +1,12 @@
+
+
+
+03: k
+
+select  driver,c
+from
+(select count(*)as c,driver
+from accident
+group by driver
+order by c) n 
+where driver='arif'
